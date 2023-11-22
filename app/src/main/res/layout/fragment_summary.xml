@@ -82,12 +82,12 @@
 
                 <TextView
                     android:id="@+id/flavor"
-                    android:text="@{viewModel.flavor}"
+                    android:text="@{summaryFragment.printList()}"
                     style="@style/Widget.Cupcake.TextView.OrderSummary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/order_summary_margin"
-                    tools:text="Chocolate" />
+                    tools:text="Flavor" />
 
                 <View
                     android:id="@+id/divider2"

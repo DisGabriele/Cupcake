@@ -1,6 +1,5 @@
 package com.example.cupcake.model
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -34,7 +33,8 @@ class OrderViewModel : ViewModel() {
         NumberFormat.getCurrencyInstance().format(it)
     }
 
-    val dataset: List<Flavor> = Datasource.flavors
+    private val _dataset = MutableLiveData(Datasource.flavors)
+    val dataset: LiveData<List<Flavor>> = _dataset
 
     val dateOptions = getPickupOptions()
 
@@ -54,29 +54,16 @@ class OrderViewModel : ViewModel() {
     fun setQuantity(numberCupcakes: Int) {
         _quantity.value = numberCupcakes
         _remainingQuantity.value = numberCupcakes
+        updatePrice()
     }
 
     fun setRemainingQuantity(numberCupcakes: Int) {
         _remainingQuantity.value = numberCupcakes
     }
 
-    fun incrementRemainingQuantity() {
-        _remainingQuantity.value = _remainingQuantity.value!! + 1
-    }
-    fun decrementRemainingQuantity() {
-        _remainingQuantity.value = _remainingQuantity.value!! -1
-    }
-
     fun setFlavor(desiredFlavor: String) {
         _flavor.value = desiredFlavor
     }
-
-    fun setFlavorAndDate(desiredFlavor: String, pickupDate: String){
-        _flavor.value = desiredFlavor
-        _date.value = pickupDate
-        updatePrice()
-    }
-
     fun setDate(pickupDate: String) {
         _date.value = pickupDate
         updatePrice()
@@ -102,8 +89,10 @@ class OrderViewModel : ViewModel() {
     fun resetOrder() {
         _quantity.value = 0
         _flavor.value = ""
-        _date.value = dateOptions[1]
         _price.value = 0.0
+        dataset.value?.forEach{ flavor ->
+            flavor.quantity = 0
+        }
     }
 
 }

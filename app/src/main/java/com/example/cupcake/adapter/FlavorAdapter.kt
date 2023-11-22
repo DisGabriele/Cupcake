@@ -1,7 +1,5 @@
 package com.example.cupcake.adapter
 
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +17,7 @@ class FlavorAdapter(
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder.
     // Each data item is just an Affirmation object.
-    class FlavorViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class FlavorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.label)
 
         val quantityTextView: TextView = view.findViewById(R.id.quantityTextView)
@@ -44,21 +42,21 @@ class FlavorAdapter(
      * Replace the contents of a view (invoked by the layout manager)
      */
     override fun onBindViewHolder(holder: FlavorViewHolder, position: Int) {
-        val item = orderViewModel.dataset[position]
-        holder.textView.text = item.name
-        holder.quantityTextView.text = item.quantity.toString()
+        val item = orderViewModel.dataset.value?.get(position)
+        holder.textView.text = item?.name
+        holder.quantityTextView.text = item?.quantity.toString()
         holder.plusButton.setOnClickListener() {
             if (orderViewModel.remainingQuantity.value!! > 0) {
                 orderViewModel.setRemainingQuantity(orderViewModel.remainingQuantity.value!! - 1)
-                item.quantity ++
+                item?.quantity = item?.quantity?.plus(1)!!
                 holder.quantityTextView.text = item.quantity.toString()
             }
 
         }
         holder.minusButton.setOnClickListener() {
-            if (orderViewModel.remainingQuantity.value!! <= 6 && item.quantity > 0) {
+            if (orderViewModel.remainingQuantity.value!! <= 6 && item?.quantity!! > 0) {
                 orderViewModel.setRemainingQuantity(orderViewModel.remainingQuantity.value!! + 1)
-                item.quantity --
+                item.quantity = item.quantity.minus(1)
                 holder.quantityTextView.text = item.quantity.toString()
             }
 
@@ -68,5 +66,5 @@ class FlavorAdapter(
         /**
          * Return the size of your dataset (invoked by the layout manager)
          */
-        override fun getItemCount(): Int = orderViewModel.dataset.size
+        override fun getItemCount(): Int = orderViewModel.dataset.value!!.size
     }

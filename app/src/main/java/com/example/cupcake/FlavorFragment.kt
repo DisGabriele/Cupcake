@@ -18,14 +18,17 @@ package com.example.cupcake
 import com.example.cupcake.model.OrderViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cupcake.adapter.FlavorAdapter
-import com.example.cupcake.data.Datasource
 import com.example.cupcake.databinding.FragmentFlavorBinding
 
 /**
@@ -44,10 +47,10 @@ class FlavorFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val fragmentBinding = FragmentFlavorBinding.inflate(inflater, container, false)
         binding = fragmentBinding
-
+        setHasOptionsMenu(true)
         return fragmentBinding.root
     }
 
@@ -65,12 +68,28 @@ class FlavorFragment : Fragment() {
             }
 
         }
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                sharedViewModel.dataset.value!!.forEach{flavor ->
+                    flavor.quantity = 0
+                }
+                findNavController().popBackStack()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
     /**
      * Navigate to the next screen to choose pickup date.
      */
     fun goToNextScreen() {
+        if(sharedViewModel.dataset.value!![2].quantity > 0){
+            sharedViewModel.setDate(sharedViewModel.dateOptions[1])
+        }
+        else{
+            sharedViewModel.setDate(sharedViewModel.dateOptions[0])
+        }
         findNavController().navigate(R.id.action_flavorFragment_to_pickupFragment)
     }
 
@@ -88,5 +107,16 @@ class FlavorFragment : Fragment() {
         binding = null
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean
+    {
+        // handle the up button here
+        sharedViewModel.dataset.value!!.forEach{flavor ->
+            flavor.quantity = 0
+        }
+        return NavigationUI.onNavDestinationSelected(
+            item,
+            requireView().findNavController())
+                || super.onOptionsItemSelected(item)
+    }
 
 }

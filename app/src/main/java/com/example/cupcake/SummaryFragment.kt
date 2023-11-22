@@ -22,6 +22,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.fragment.app.activityViewModels
@@ -43,7 +44,7 @@ class SummaryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val fragmentBinding = FragmentSummaryBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         return fragmentBinding.root
@@ -57,29 +58,42 @@ class SummaryFragment : Fragment() {
             viewModel = sharedViewModel
             summaryFragment = this@SummaryFragment
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
     /**
      * Submit the order by sharing out the order details to another app via an implicit intent.
      */
     fun sendOrder() {
-        val numberOfCupcakes = sharedViewModel.quantity.value ?: 0
-        val orderSummary = getString(
-            R.string.order_details,
-            resources.getQuantityString(R.plurals.cupcakes, numberOfCupcakes, numberOfCupcakes),
-            sharedViewModel.flavor.value.toString(),
-            sharedViewModel.date.value.toString(),
-            sharedViewModel.price.value.toString(),
-            binding?.orderName?.text
-        )
+        if(binding?.orderName?.text!!.isEmpty()){
+            Toast.makeText(requireContext(),"Insert a name!",Toast.LENGTH_SHORT).show()
+            return
+        }
+        else {
+            val numberOfCupcakes = sharedViewModel.quantity.value ?: 0
+            val orderSummary = getString(
+                R.string.order_details,
+                resources.getQuantityString(R.plurals.cupcakes, numberOfCupcakes, numberOfCupcakes),
+                sharedViewModel.flavor.value.toString(),
+                sharedViewModel.date.value.toString(),
+                sharedViewModel.price.value.toString(),
+                binding?.orderName?.text
+            )
 
-        val intent = Intent(Intent.ACTION_SEND)
-            .setType("text/plain")
-            .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.new_cupcake_order))
-            .putExtra(Intent.EXTRA_TEXT, orderSummary)
+            val intent = Intent(Intent.ACTION_SEND)
+                .setType("text/plain")
+                .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.new_cupcake_order))
+                .putExtra(Intent.EXTRA_TEXT, orderSummary)
 
-        if (activity?.packageManager?.resolveActivity(intent, 0) != null) {
-            startActivity(intent)
+            if (activity?.packageManager?.resolveActivity(intent, 0) != null) {
+                startActivity(intent)
+            }
         }
     }
 
@@ -95,5 +109,15 @@ class SummaryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    fun printList(): String{
+        var output = ""
+        sharedViewModel.dataset.value!!.forEach{flavor ->
+                    if(flavor.quantity > 0){
+                        output += "${flavor.name}: ${flavor.quantity}\n"
+                    }
+        }
+        return output
     }
 }

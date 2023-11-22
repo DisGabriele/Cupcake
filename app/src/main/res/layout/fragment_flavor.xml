@@ -59,6 +59,7 @@
 
             <Button
                 android:id="@+id/next_button"
+                android:enabled="@{viewModel.remainingQuantity.equals(0) ? true : false}"
                 android:onClick="@{() -> flavorFragment.goToNextScreen()}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
