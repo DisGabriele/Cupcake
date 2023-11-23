@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.example.cupcake.Data.Datasource
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -36,7 +37,7 @@ class OrderViewModel : ViewModel() {
    // private val _dataset = MutableLiveData<MutableList<Flavor>>()
     // val dataset: MutableLiveData<MutableList<Flavor>> = _dataset
 
-    private var dataset: MutableList<Flavor> = mutableListOf()
+    val dataset: List<Flavor> = Datasource.flavors
 
     val dateOptions = getPickupOptions()
 
@@ -44,13 +45,10 @@ class OrderViewModel : ViewModel() {
         resetOrder()
     }
 
-    fun getFlavorQuantityList(): MutableList<Flavor> {
+    fun getFlavorQuantityList(): List<Flavor> {
         return dataset
     }
 
-    fun setFlavorQuantityList (flavor:Flavor){
-        dataset.add(flavor)
-    }
 
     private fun updatePrice() {
         var calculatedPrice = (quantity.value ?: 0) * PRICE_PER_CUPCAKE
@@ -100,7 +98,6 @@ class OrderViewModel : ViewModel() {
         _quantity.value = 0
         _flavor.value = ""
         _price.value = 0.0
-        dataset.clear()
     }
 
 }

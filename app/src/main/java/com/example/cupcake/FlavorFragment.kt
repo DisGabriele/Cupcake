@@ -30,7 +30,6 @@ import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cupcake.adapter.FlavorAdapter
 import com.example.cupcake.databinding.FragmentFlavorBinding
-import com.example.cupcake.model.Flavor
 
 /**
  * [FlavorFragment] allows a user to choose a cupcake flavor for the order.
@@ -59,11 +58,6 @@ class FlavorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(sharedViewModel.getFlavorQuantityList().isEmpty()) {
-            for (flavor in requireContext().resources.getStringArray(R.array.flavors)) {
-                sharedViewModel.setFlavorQuantityList(Flavor(flavor))
-            }
-        }
 
         binding?.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -72,12 +66,11 @@ class FlavorFragment : Fragment() {
             recyclerView.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(this@FlavorFragment.context)
-                adapter = FlavorAdapter(sharedViewModel)
+                adapter = FlavorAdapter(context,sharedViewModel)
             }
         }
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                sharedViewModel.getFlavorQuantityList().clear()
                 findNavController().popBackStack()
             }
         }
@@ -115,7 +108,6 @@ class FlavorFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean
     {
         // handle the up button here
-        sharedViewModel.getFlavorQuantityList().clear()
 
         return NavigationUI.onNavDestinationSelected(
             item,
