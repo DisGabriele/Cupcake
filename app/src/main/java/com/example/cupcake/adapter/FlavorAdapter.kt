@@ -34,6 +34,9 @@ class FlavorAdapter(
             .inflate(R.layout.fragment_flavor_number, parent, false)
 
 
+
+
+
         return FlavorViewHolder(adapterLayout)
     }
 
