@@ -33,10 +33,6 @@ class FlavorAdapter(
         val adapterLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_flavor_number, parent, false)
 
-
-
-
-
         return FlavorViewHolder(adapterLayout)
     }
 
@@ -46,20 +42,20 @@ class FlavorAdapter(
     override fun onBindViewHolder(holder: FlavorViewHolder, position: Int) {
         val item = orderViewModel.getFlavorQuantityList()[position]
         holder.textView.text = item.name
-        holder.quantityTextView.text = item.quantity.toString()
+        holder.quantityTextView.text = item.quantity.value.toString()
         holder.plusButton.setOnClickListener() {
             if (orderViewModel.remainingQuantity.value!! > 0) {
                 orderViewModel.setRemainingQuantity(orderViewModel.remainingQuantity.value!! - 1)
-                item.quantity = item.quantity.plus(1)
-                holder.quantityTextView.text = item.quantity.toString()
+                item.setQuantity(item.quantity.value!! + 1)
+                holder.quantityTextView.text = item.quantity.value.toString()
             }
 
         }
         holder.minusButton.setOnClickListener {
-            if (orderViewModel.remainingQuantity.value!! <= 6 && item.quantity > 0) {
+            if (orderViewModel.remainingQuantity.value!! <= 6 && item.quantity.value!! > 0) {
                 orderViewModel.setRemainingQuantity(orderViewModel.remainingQuantity.value!! + 1)
-                item.quantity = item.quantity.minus(1)
-                holder.quantityTextView.text = item.quantity.toString()
+                item.setQuantity(item.quantity.value!! - 1)
+                holder.quantityTextView.text = item.quantity.value.toString()
             }
 
         }

@@ -74,6 +74,16 @@
                 android:layout_marginTop="@dimen/margin_between_elements"
                 android:text="@string/cancel" />
 
+            <TextView
+                android:id="@+id/warning"
+                style="@style/Widget.Cupcake.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/side_margin"
+                android:alpha="@{viewModel.getFlavorQuantityList()[2].quantity > 0 ? 1.0f : 0.0f}"
+                android:text="@{@string/special_flavor_warning}"
+                tools:text="* Pickup is not available today" />
+
         </LinearLayout>
     </ScrollView>
 </layout>

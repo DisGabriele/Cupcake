@@ -46,4 +46,5 @@
         <item>Caramello Salato</item>
         <item>Caffè</item>
     </string-array>
+    <string name="special_flavor_warning">* Non può essere spedito Oggi!</string>
 </resources>

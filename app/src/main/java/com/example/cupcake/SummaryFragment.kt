@@ -136,8 +136,8 @@ class SummaryFragment : Fragment() {
         var output = ""
 
         sharedViewModel.getFlavorQuantityList().forEach{flavor ->
-            if(flavor.quantity > 0){
-                output += " ${flavor.name}: ${flavor.quantity}\n"
+            if(flavor.quantity.value!! > 0){
+                output += " ${flavor.name}: ${flavor.quantity.value}\n"
 
             }
         }

@@ -63,4 +63,5 @@
         <item>Salted Caramel</item>
         <item>Coffee</item>
     </string-array>
+    <string name="special_flavor_warning">* Cannot be delivered today!</string>
 </resources>

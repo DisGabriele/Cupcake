@@ -73,7 +73,6 @@ class FlavorFragment : Fragment() {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(this@FlavorFragment.context)
                 adapter = FlavorAdapter(sharedViewModel)
-          //      getChildAt(2).findViewById<>(R.id.plusButton)
             }
         }
         val callback = object : OnBackPressedCallback(true) {
@@ -90,7 +89,7 @@ class FlavorFragment : Fragment() {
      * Navigate to the next screen to choose pickup date.
      */
     fun goToNextScreen() {
-        if(sharedViewModel.getFlavorQuantityList()[2].quantity > 0){
+        if(sharedViewModel.getFlavorQuantityList()[2].quantity.value!! > 0){
             sharedViewModel.setDate(sharedViewModel.dateOptions[1])
         }
         else{

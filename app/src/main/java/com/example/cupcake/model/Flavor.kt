@@ -1,4 +1,14 @@
 package com.example.cupcake.model
 
-class Flavor(var name: String = "",var quantity: Int = 0) {
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+
+class Flavor(var name: String) {
+
+    private val _quantity = MutableLiveData(0)
+    var quantity: LiveData<Int> = _quantity
+
+    fun setQuantity(numberCupcakes: Int) {
+        _quantity.value = numberCupcakes
+    }
 }
