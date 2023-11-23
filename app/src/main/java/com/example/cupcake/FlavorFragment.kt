@@ -71,6 +71,9 @@ class FlavorFragment : Fragment() {
         }
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                for(i in 1..sharedViewModel.dataset.size){
+                    sharedViewModel.dataset[i-1].setQuantity(0)
+                }
                 findNavController().popBackStack()
             }
         }
@@ -108,9 +111,12 @@ class FlavorFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean
     {
         // handle the up button here
-
+        for(i in 1..sharedViewModel.dataset.size){
+            sharedViewModel.dataset[i-1].setQuantity(0)
+        }
         return NavigationUI.onNavDestinationSelected(
             item,
+
             requireView().findNavController())
                 || super.onOptionsItemSelected(item)
     }
