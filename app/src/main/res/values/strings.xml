@@ -22,7 +22,7 @@
     <string name="choose_flavor">Choose Flavor</string>
     <string name="vanilla">Vanilla</string>
     <string name="chocolate">Chocolate</string>
-    <string name="red_velvet">Red Velvet</string>
+    <string name="red_velvet" translatable="false">Red Velvet</string>
     <string name="salted_caramel">Salted Caramel</string>
     <string name="coffee">Coffee</string>
     <string name="special_flavor">Special Flavor</string>
@@ -32,20 +32,35 @@
     <string name="order_summary">Order Summary</string>
     <string name="send">Send Order to Another App</string>
     <string name="quantity">Quantity</string>
+    <string name="cupcake_count">Cupcake count : %s</string>
     <string name="flavor">Flavor</string>
-    <string name="enter_your_name">Enter your name</string>
     <string name="pickup_date">Pickup date</string>
     <string name="subtotal_price">Subtotal %s</string>
     <string name="total_price">Total %s</string>
     <string name="new_cupcake_order">New Cupcake Order</string>
-    <string name="order_details">Quantity: %1$s \n Flavor: %2$s \nPickup date: %3$s \n
-    Total: %4$s \n\n Thank you,%5$s!</string>
-    <string name="name">NAME</string>
-
+    <string name="order_details">Quantity: %1$s \n%2$sPickup date: %3$s \nTotal: %4$s \n\nThank you, by %5$s!</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="name">Name</string>
+    <string name="nameList" translatable="false">%s:</string>
+    <string name="note">* Cannot be delivered today!</string>
     <plurals name="cupcakes">
         <item quantity="one">%d cupcake</item>
         <item quantity="other">%d cupcakes</item>
     </plurals>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <plurals name="flavors">
+        <item quantity="one">Flavor:%s</item>
+        <item quantity="other">Flavors:\n%s</item>
+    </plurals>
+    <plurals name="flavorsLabel">
+        <item quantity="one">Flavor</item>
+        <item quantity="other">Flavors</item>
+    </plurals>
+
+    <string-array name="flavors">
+        <item>Vanilla</item>
+        <item>Chocolate</item>
+        <item>Red Velvet</item>
+        <item>Salted Caramel</item>
+        <item>Coffee</item>
+    </string-array>
 </resources>

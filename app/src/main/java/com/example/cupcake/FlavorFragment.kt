@@ -30,6 +30,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cupcake.adapter.FlavorAdapter
 import com.example.cupcake.databinding.FragmentFlavorBinding
+import com.example.cupcake.model.Flavor
 
 /**
  * [FlavorFragment] allows a user to choose a cupcake flavor for the order.
@@ -42,6 +43,7 @@ class FlavorFragment : Fragment() {
     // This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks,
     // when the view hierarchy is attached to the fragment.
     private var binding: FragmentFlavorBinding? = null
+
 
 
     override fun onCreateView(
@@ -57,6 +59,12 @@ class FlavorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if(sharedViewModel.getFlavorQuantityList().isEmpty()) {
+            for (flavor in requireContext().resources.getStringArray(R.array.flavors)) {
+                sharedViewModel.setFlavorQuantityList(Flavor(flavor))
+            }
+        }
+
         binding?.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = sharedViewModel
@@ -65,14 +73,12 @@ class FlavorFragment : Fragment() {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(this@FlavorFragment.context)
                 adapter = FlavorAdapter(sharedViewModel)
+          //      getChildAt(2).findViewById<>(R.id.plusButton)
             }
-
         }
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                sharedViewModel.dataset.value!!.forEach{flavor ->
-                    flavor.quantity = 0
-                }
+                sharedViewModel.getFlavorQuantityList().clear()
                 findNavController().popBackStack()
             }
         }
@@ -84,7 +90,7 @@ class FlavorFragment : Fragment() {
      * Navigate to the next screen to choose pickup date.
      */
     fun goToNextScreen() {
-        if(sharedViewModel.dataset.value!![2].quantity > 0){
+        if(sharedViewModel.getFlavorQuantityList()[2].quantity > 0){
             sharedViewModel.setDate(sharedViewModel.dateOptions[1])
         }
         else{
@@ -110,9 +116,8 @@ class FlavorFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean
     {
         // handle the up button here
-        sharedViewModel.dataset.value!!.forEach{flavor ->
-            flavor.quantity = 0
-        }
+        sharedViewModel.getFlavorQuantityList().clear()
+
         return NavigationUI.onNavDestinationSelected(
             item,
             requireView().findNavController())

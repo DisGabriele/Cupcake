@@ -49,13 +49,13 @@
 
             <TextView
                 android:id="@+id/total"
-                android:text="@{@string/total_price(viewModel.price)}"
-                style="@style/Widget.Cupcake.TextView.FinalPrice"
+                android:text="@{@string/subtotal_price(viewModel.price)}"
+                style="@style/Widget.Cupcake.TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="@dimen/side_margin"
-                tools:text="Total $5.00" />
+                tools:text="SubTotal $5.00" />
 
             <Button
                 android:id="@+id/next_button"

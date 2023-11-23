@@ -19,7 +19,6 @@ class FlavorAdapter(
     // Each data item is just an Affirmation object.
     class FlavorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.label)
-
         val quantityTextView: TextView = view.findViewById(R.id.quantityTextView)
         val minusButton: Button = view.findViewById(R.id.minusButton)
         val plusButton: Button = view.findViewById(R.id.plusButton)
@@ -42,19 +41,19 @@ class FlavorAdapter(
      * Replace the contents of a view (invoked by the layout manager)
      */
     override fun onBindViewHolder(holder: FlavorViewHolder, position: Int) {
-        val item = orderViewModel.dataset.value?.get(position)
-        holder.textView.text = item?.name
-        holder.quantityTextView.text = item?.quantity.toString()
+        val item = orderViewModel.getFlavorQuantityList()[position]
+        holder.textView.text = item.name
+        holder.quantityTextView.text = item.quantity.toString()
         holder.plusButton.setOnClickListener() {
             if (orderViewModel.remainingQuantity.value!! > 0) {
                 orderViewModel.setRemainingQuantity(orderViewModel.remainingQuantity.value!! - 1)
-                item?.quantity = item?.quantity?.plus(1)!!
+                item.quantity = item.quantity.plus(1)
                 holder.quantityTextView.text = item.quantity.toString()
             }
 
         }
-        holder.minusButton.setOnClickListener() {
-            if (orderViewModel.remainingQuantity.value!! <= 6 && item?.quantity!! > 0) {
+        holder.minusButton.setOnClickListener {
+            if (orderViewModel.remainingQuantity.value!! <= 6 && item.quantity > 0) {
                 orderViewModel.setRemainingQuantity(orderViewModel.remainingQuantity.value!! + 1)
                 item.quantity = item.quantity.minus(1)
                 holder.quantityTextView.text = item.quantity.toString()
@@ -66,5 +65,5 @@ class FlavorAdapter(
         /**
          * Return the size of your dataset (invoked by the layout manager)
          */
-        override fun getItemCount(): Int = orderViewModel.dataset.value!!.size
+        override fun getItemCount(): Int = orderViewModel.getFlavorQuantityList().size
     }

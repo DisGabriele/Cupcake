@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cupcake</string>
+    <string name="order_cupcakes">Ordina Cupcake</string>
+    <string name="one_cupcake">Un Cupcake</string>
+    <string name="six_cupcakes">Sei Cupcake</string>
+    <string name="twelve_cupcakes">Dodici Cupcake</string>
+    <string name="choose_flavor">Scegliere il Gusto</string>
+    <string name="vanilla">Vaniglia</string>
+    <string name="chocolate">Cioccolato</string>
+    <string name="salted_caramel">Caramello Salato</string>
+    <string name="coffee">Caffè</string>
+    <string name="special_flavor">Gusto Speciale</string>
+    <string name="cancel">Cancella</string>
+    <string name="next">Avanti</string>
+    <string name="choose_pickup_date">Scegliere la Data di Spedizione</string>
+    <string name="order_summary">Riepilogo Ordine</string>
+    <string name="send">Invia l\'Ordine su un\'altra App</string>
+    <string name="quantity">Quantità</string>
+    <string name="cupcake_count">N° Cupcake: %s</string>
+    <string name="flavor">Gusto</string>
+    <string name="pickup_date">Data di Spedizione</string>
+    <string name="subtotal_price">Tot. Parziale %s</string>
+    <string name="total_price">Totale %s</string>
+    <string name="new_cupcake_order">Nuovo Ordine di Cupcake</string>
+    <string name="order_details">Quantità: %1$s\n%2$sData di spedizione: %3$s\nTotale: %4$s\n\nGrazie, da %5$s!</string>
+    <string name="enter_your_name">Inserire il Nome</string>
+    <string name="name">Nome</string>
+    <string name="note">* Non può essere spedito Oggi!</string>
+    <plurals name="cupcakes">
+        <item quantity="one">%d cupcake</item>
+        <item quantity="other">%d cupcake</item>
+    </plurals>
+    <plurals name="flavors">
+        <item quantity="one">Gusto:%s</item>
+        <item quantity="other">Gusti:\n%s</item>
+    </plurals>
+    <plurals name="flavorsLabel">
+        <item quantity="one">Gusto</item>
+        <item quantity="other">Gusti</item>
+    </plurals>
+    <string-array name="flavors">
+        <item>Vaniglia</item>
+        <item>Cioccolato</item>
+        <item>Red Velvet</item>
+        <item>Caramello Salato</item>
+        <item>Caffè</item>
+    </string-array>
+</resources>

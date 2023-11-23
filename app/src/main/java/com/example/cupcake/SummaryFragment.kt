@@ -18,6 +18,8 @@ package com.example.cupcake
 import android.content.Intent
 import com.example.cupcake.model.OrderViewModel
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,7 +59,26 @@ class SummaryFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             viewModel = sharedViewModel
             summaryFragment = this@SummaryFragment
+            flavorLabel.text = resources.getQuantityText(R.plurals.flavorsLabel,sharedViewModel.quantity.value!!)
         }
+
+        binding?.sendButton?.isEnabled = false
+
+        binding?.orderName?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                // Enable the sendButton if the orderName EditText is not empty
+                binding?.sendButton?.isEnabled = !s.isNullOrEmpty()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Not used, keeping the method to implement TextWatcher interface
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Not used, keeping the method to implement TextWatcher interface
+            }
+        })
+
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -80,7 +101,7 @@ class SummaryFragment : Fragment() {
             val orderSummary = getString(
                 R.string.order_details,
                 resources.getQuantityString(R.plurals.cupcakes, numberOfCupcakes, numberOfCupcakes),
-                sharedViewModel.flavor.value.toString(),
+                resources.getQuantityString(R.plurals.flavors,sharedViewModel.quantity.value!!,binding?.flavor?.text!!),
                 sharedViewModel.date.value.toString(),
                 sharedViewModel.price.value.toString(),
                 binding?.orderName?.text
@@ -113,11 +134,14 @@ class SummaryFragment : Fragment() {
 
     fun printList(): String{
         var output = ""
-        sharedViewModel.dataset.value!!.forEach{flavor ->
-                    if(flavor.quantity > 0){
-                        output += "${flavor.name}: ${flavor.quantity}\n"
-                    }
+
+        sharedViewModel.getFlavorQuantityList().forEach{flavor ->
+            if(flavor.quantity > 0){
+                output += " ${flavor.name}: ${flavor.quantity}\n"
+
+            }
         }
+        output.dropLast(1)
         return output
     }
 }

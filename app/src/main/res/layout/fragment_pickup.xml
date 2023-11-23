@@ -49,7 +49,7 @@
 
                 <RadioButton
                     android:id="@+id/option0"
-                    android:enabled="@{viewModel.dataset[2].quantity > 0 ? false : true}"
+                    android:enabled="@{viewModel.getFlavorQuantityList[2].quantity > 0 ? false : true}"
                     android:checked="@{viewModel.date.equals(viewModel.dateOptions[0])}"
                     android:onClick="@{() -> viewModel.setDate(viewModel.dateOptions[0])}"
                     android:text="@{viewModel.dateOptions[0]}"
