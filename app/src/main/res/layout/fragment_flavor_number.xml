@@ -23,9 +23,10 @@
             style="@style/Widget.Cupcake.TextView.OrderSummary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/number_picker"
-            app:layout_constraintBottom_toBottomOf="@+id/number_picker"
+            android:layout_marginStart="@dimen/side_margin"
+            app:layout_constraintStart_toEndOf="@id/imageView"
+            app:layout_constraintTop_toTopOf="@id/imageView"
+            app:layout_constraintBottom_toBottomOf="@id/imageView"
             tools:layout_editor_absoluteY="15dp"
             tools:text="flavor" />
 
@@ -33,11 +34,12 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_cupcake"
             android:layout_marginStart="@dimen/side_margin"
-            app:layout_constraintStart_toEndOf="@id/label"
-            app:layout_constraintTop_toTopOf="@id/label"
-            app:layout_constraintBottom_toBottomOf="@id/label">
+            android:src="@drawable/ic_cupcake"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/number_picker"
+            app:layout_constraintBottom_toBottomOf="@+id/number_picker"
+            >
 
         </ImageView>
 
