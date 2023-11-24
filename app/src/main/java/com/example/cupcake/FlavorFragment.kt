@@ -67,6 +67,7 @@ class FlavorFragment : Fragment() {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(this@FlavorFragment.context)
                 adapter = FlavorAdapter(context,sharedViewModel)
+                isNestedScrollingEnabled = false
             }
         }
         val callback = object : OnBackPressedCallback(true) {
