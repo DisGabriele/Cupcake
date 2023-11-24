@@ -79,9 +79,10 @@ class FlavorAdapter(
                     }
                 }
             }
+        }
 
             holder.minusButton.setOnClickListener {
-                if (orderViewModel.remainingQuantity.value!! <= 6 && item.quantity.value!! > 0) {
+                if (orderViewModel.remainingQuantity.value!! <= orderViewModel.quantity.value!! && item.quantity.value!! > 0) {
                     orderViewModel.setRemainingQuantity(orderViewModel.remainingQuantity.value!! + 1)
                     item.setQuantity(item.quantity.value!! - 1)
                     holder.quantityTextView.text = item.quantity.value.toString()
@@ -89,7 +90,7 @@ class FlavorAdapter(
 
             }
         }
-    }
+
 
         /**
          * Return the size of your dataset (invoked by the layout manager)
